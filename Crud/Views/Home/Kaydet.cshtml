@@ -1,0 +1,104 @@
+﻿@model Crud.Models.CrudViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .error {
+        color: red;
+    }
+</style>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<div class="container body-content" style="width:40%; margin-top:2%">
+    <h2>Kaydet</h2>
+    @using (Html.BeginForm("Kaydet", "Home", FormMethod.Post))
+    {
+        @Html.ValidationMessageFor(model => model.AdresID, "", new { @class = "error" })
+        @Html.DropDownListFor(model => model.AdresID, ViewBag.AdresList as SelectList, "--Seçim Yapınız--", new { @class = "form-control" })<br />
+
+        @Html.ValidationMessageFor(model => model.Adi, "", new { @class = "error" })
+        @Html.TextBoxFor(model => model.Adi, new { @class = "form-control", @placeholder = "Adı" })<br />
+
+        @Html.ValidationMessageFor(model => model.Soyadi, "", new { @class = "error" })
+        @Html.TextBoxFor(model => model.Soyadi, new { @class = "form-control", @placeholder = "Soyadı" })<br />
+
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error" })
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })<br />
+
+        @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "error" })
+        @Html.TextBoxFor(model => model.Telefon, new { @class = "form-control", @placeholder = "(___)___ __ __" })<br />
+
+        @Html.ValidationMessageFor(model => model.Site, "", new { @class = "error" })
+        @Html.TextBoxFor(model => model.Site, new { @class = "form-control", @placeholder = "Site" })<br />
+
+        <input type="submit" class="btn btn-block btn-primary" value="Kaydet" />
+    }
+
+</div>
+
+ @*Kaydetme de jQuery AJAX Kullanımı ASP.NET MVC*@
+
+@*<div class="container" style="width:40%;margin-top:2%">
+
+        <form id="myForm">
+
+            @Html.DropDownListFor(model => model.AdresID, ViewBag.AdresList as SelectList, "--Seçim Yapınız--", new { @class = "form-control" })<br />
+
+            @Html.TextBoxFor(model => model.Adi, new { @class = "form-control", @placeholder = "Adı" })<br />
+
+            @Html.TextBoxFor(model => model.Soyadi, new { @class = "form-control", @placeholder = "Soyadı" })<br />
+
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })<br />
+
+            @Html.TextBoxFor(model => model.Telefon, new { @class = "form-control", @placeholder = "(___)___ __ __" })<br />
+
+            @Html.TextBoxFor(model => model.Site, new { @class = "form-control", @placeholder = "Site" })<br />
+
+            <input type="reset" value="Kaydet" class="btn btn-block btn-primary" id="btnSubmit" />
+
+        </form>
+
+        <div style="text-align:center;display:none" id="loaderDiv">
+            <img src="~/Content/InternetSlowdown_Day.gif" width="150" />
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#btnSubmit").click(function () {
+                debugger
+                $("#loaderDiv").show();
+
+                var data = $("#myForm").serialize();
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Home/Kaydet",
+                    data: data,
+                    success: function (response) {
+                        $("#loaderDiv").hide();
+                        alert("Kayıt Eklendi!");
+                    }
+
+                })
+            })
+
+
+        })
+
+
+    </script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+
+
+
+
+
+
+
