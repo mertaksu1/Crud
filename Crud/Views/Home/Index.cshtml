@@ -1,0 +1,89 @@
+﻿@using PagedList
+@using PagedList.Mvc
+
+@model IPagedList<Crud.Models.Kisiler>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="container body-content" style="width:50%; margin-top:2%">
+
+
+        <p>
+            @Html.ActionLink("Kişi Ekle", "Kaydet")
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+            {
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <input class="btn btn-primary" name="kaydet" id="kaydet" type="submit" value="Ara" />
+                        <input class="form-control" type="text" name="Ara" id="Ara" placeholder="Aranacak ismi giriniz...">
+                    </span>
+                </div>
+            }
+
+        </p>
+
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Adi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Soyadi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Telefon)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Adresler.Adres)
+                </th>
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                {
+                    <th><input class="btn btn-warning" name="S" id="S" type="submit" value="Sıfırla" /></th>
+                }
+            </tr>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Soyadi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adresler.Adres)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Güncelle", "Guncelle", new { id = item.Id }) |
+                        @Html.ActionLink("Sil", "Sil", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="4">Aradığınız isim bulunamadı!!</td>
+                </tr>
+
+
+            }
+
+        </table>
+        <div class="container body-content" style="width:35%; margin-top:2%">
+            @Html.PagedListPager(Model, sayfa => Url.Action("Index", new { sayfa, Ara = Request.QueryString["Ara"] }))
+        </div>
+    </div>

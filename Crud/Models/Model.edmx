@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CrudModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adresler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kisiler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefon" Type="char" MaxLength="10" />
+          <Property Name="AdresID" Type="int" />
+        </EntityType>
+        <EntityType Name="Siteler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KisiID" Type="int" />
+          <Property Name="Site" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Kisiler_Adresler">
+          <End Role="Adresler" Type="Self.Adresler" Multiplicity="0..1" />
+          <End Role="Kisiler" Type="Self.Kisiler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adresler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kisiler">
+              <PropertyRef Name="AdresID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Siteler_Kisiler1">
+          <End Role="Kisiler" Type="Self.Kisiler" Multiplicity="0..1" />
+          <End Role="Siteler" Type="Self.Siteler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kisiler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Siteler">
+              <PropertyRef Name="KisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrudModelStoreContainer">
+          <EntitySet Name="Adresler" EntityType="Self.Adresler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kisiler" EntityType="Self.Kisiler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Siteler" EntityType="Self.Siteler" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Kisiler_Adresler" Association="Self.FK_Kisiler_Adresler">
+            <End Role="Adresler" EntitySet="Adresler" />
+            <End Role="Kisiler" EntitySet="Kisiler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Siteler_Kisiler1" Association="Self.FK_Siteler_Kisiler1">
+            <End Role="Kisiler" EntitySet="Kisiler" />
+            <End Role="Siteler" EntitySet="Siteler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CrudModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adresler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kisiler" Relationship="Self.FK_Kisiler_Adresler" FromRole="Adresler" ToRole="Kisiler" />
+        </EntityType>
+        <EntityType Name="Kisiler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="AdresID" Type="Int32" />
+          <NavigationProperty Name="Adresler" Relationship="Self.FK_Kisiler_Adresler" FromRole="Kisiler" ToRole="Adresler" />
+          <NavigationProperty Name="Siteler" Relationship="Self.FK_Siteler_Kisiler1" FromRole="Kisiler" ToRole="Siteler" />
+        </EntityType>
+        <EntityType Name="Siteler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KisiID" Type="Int32" />
+          <Property Name="Site" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kisiler" Relationship="Self.FK_Siteler_Kisiler1" FromRole="Siteler" ToRole="Kisiler" />
+        </EntityType>
+        <Association Name="FK_Kisiler_Adresler">
+          <End Role="Adresler" Type="Self.Adresler" Multiplicity="0..1" />
+          <End Role="Kisiler" Type="Self.Kisiler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adresler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kisiler">
+              <PropertyRef Name="AdresID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Siteler_Kisiler1">
+          <End Role="Kisiler" Type="Self.Kisiler" Multiplicity="0..1" />
+          <End Role="Siteler" Type="Self.Siteler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kisiler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Siteler">
+              <PropertyRef Name="KisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrudEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adresler" EntityType="Self.Adresler" />
+          <EntitySet Name="Kisiler" EntityType="Self.Kisiler" />
+          <EntitySet Name="Siteler" EntityType="Self.Siteler" />
+          <AssociationSet Name="FK_Kisiler_Adresler" Association="Self.FK_Kisiler_Adresler">
+            <End Role="Adresler" EntitySet="Adresler" />
+            <End Role="Kisiler" EntitySet="Kisiler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Siteler_Kisiler1" Association="Self.FK_Siteler_Kisiler1">
+            <End Role="Kisiler" EntitySet="Kisiler" />
+            <End Role="Siteler" EntitySet="Siteler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CrudModelStoreContainer" CdmEntityContainer="CrudEntities">
+          <EntitySetMapping Name="Adresler">
+            <EntityTypeMapping TypeName="CrudModel.Adresler">
+              <MappingFragment StoreEntitySet="Adresler">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kisiler">
+            <EntityTypeMapping TypeName="CrudModel.Kisiler">
+              <MappingFragment StoreEntitySet="Kisiler">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="AdresID" ColumnName="AdresID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Siteler">
+            <EntityTypeMapping TypeName="CrudModel.Siteler">
+              <MappingFragment StoreEntitySet="Siteler">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="KisiID" ColumnName="KisiID" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
